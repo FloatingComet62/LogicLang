@@ -1,7 +1,4 @@
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "lexer.h"
 
 typedef unsigned char bool;
 #define true 1
@@ -29,12 +26,13 @@ char* get_input_file()
 	}
 	while (argc)
 	{
-		char* next = shift();
-		if (next[0] != '-')
+		char* next_arg = shift();
+		if (next_arg[0] != '-')
 		{
-			return next;
+			return next_arg;
 		}
 	}
+	return 0;
 }
 
 char* read_file(char* fp)
@@ -77,5 +75,17 @@ int main(int x, char** y)
 	char* in_file = get_input_file();
 
 	char* src = read_file(in_file);
-	printf("~~ SOURCE ~~\n%s\n~~ END OF SOURCE ~~\n", src);
+
+	lexer_t lexer = (lexer_t){src, 0, 0, 0};
+
+	while (true)
+	{
+		token_t token = lex(&lexer);
+		if (token.text == 0)
+		{
+			return 0;
+		}
+		printf("[TEXT: '%s', TYPE: '%s']\n", token.text,
+			   token_type_to_string(token.type));
+	}
 }

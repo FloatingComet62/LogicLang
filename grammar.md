@@ -4,12 +4,15 @@ This is a G4 style grammar.
 program: 
 	circuit*;
 circuit:
-	(expression';')*;
+	'circuit' ID block;
+block:
+	'{' (expression';')* '}'
 expression:
 	connection 
 	| in
 	| out
-	| circuit_usage;
+	| circuit_usage
+	| binary;
 connection:
 	'connect' ID expression 'to' expression;
 out:
@@ -17,5 +20,11 @@ out:
 in:
 	'in' ID (',' ID)*;
 circuit_usage:
-	ID '(' expression *',' expression)*? ')';
+	ID '(' expression *',' expression)*? ')'  PIN?;
+binary:
+	'0' | '1';
+// skip all whitespace.
+PIN:
+	'.' NUMBER
+
 ```
