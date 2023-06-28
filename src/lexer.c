@@ -1,5 +1,25 @@
 #include "lexer.h"
 
+char* decToBinary(int n)
+{
+	int binaryNum[32];
+	int i = 0;
+	char* output = malloc(32 * sizeof(char*));
+	memset(output, '%', 32 * sizeof(char*));
+	size_t x = 0;
+	while (n > 0)
+	{
+		char* buffer = malloc(2);
+		sprintf(buffer, "%d", n % 2);
+		output[x] = buffer[0];
+		free(buffer);
+		++x;
+		n = n / 2;
+		i++;
+	}
+	return output;
+}
+
 token_t lex(lexer_t* lexer)
 {
 	// using the null terminator isnt always reliable.
@@ -90,6 +110,23 @@ token_t lex(lexer_t* lexer)
 		}
 		return (token_t){end_result, PIN, lexer->line, lexer->col};
 	}
+	if (current >= '0' && current <= '9')
+	{
+		size_t start = lexer->position;
+		while (current >= '0' && current <= '9')
+		{
+			next;
+		}
+		size_t length = lexer->position - start;
+		char* number = malloc(length + 1);
+		memset(number, 0, length + 1);
+		for (size_t i = 0; i < length; ++i)
+		{
+			number[i] = lexer->source[start + i];
+		}
+		return (token_t){number, NUMBER, lexer->line, lexer->col};
+	}
+
 	printf("Unexpected character '%c' in input.\n", current);
 	return (token_t){0};
 }
