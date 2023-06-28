@@ -43,7 +43,13 @@ token_t lex(lexer_t* lexer)
 			end_result[i] = lexer->source[start + i];
 		}
 
-		return (token_t){end_result, ID};
+		if (lexer->source[lexer->position] == '!')
+		{
+			next;
+			return (token_t){end_result, MACRO_NAME, lexer->line, lexer->col};
+		}
+
+		return (token_t){end_result, ID, lexer->line, lexer->col};
 	}
 	if (current == '0' || current == '1')
 	{
@@ -51,7 +57,7 @@ token_t lex(lexer_t* lexer)
 		str[1] = 0;
 		str[0] = current;
 		next;
-		return (token_t){str, BINARY};
+		return (token_t){str, BINARY, lexer->line, lexer->col};
 	}
 	if (current == '(' || current == ')' || current == '{' || current == '}' ||
 		current == ';' || current == ',')
@@ -60,7 +66,7 @@ token_t lex(lexer_t* lexer)
 		str[1] = 0;
 		str[0] = current;
 		next;
-		return (token_t){str, SYMBOL};
+		return (token_t){str, SYMBOL, lexer->line, lexer->col};
 	}
 	if (current == '.')
 	{
@@ -82,7 +88,7 @@ token_t lex(lexer_t* lexer)
 		{
 			end_result[i] = lexer->source[i + start];
 		}
-		return (token_t){end_result, PIN};
+		return (token_t){end_result, PIN, lexer->line, lexer->col};
 	}
 	printf("Unexpeected character '%c' in input.\n", current);
 	return (token_t){0};
