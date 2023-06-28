@@ -1,14 +1,18 @@
 # FORMAL LOGICLANG GRAMMAR.
+
 This is a G4 style grammar.
+
 ```
-program: 
+program:
 	circuit*;
 circuit:
 	'circuit' ID block;
 block:
 	'{' (expression';')* '}'
+ID:
+	[_a-zA-Z]+[_a-zA-Z0-9]*;
 expression:
-	connection 
+	connection
 	| in
 	| out
 	| circuit_usage
