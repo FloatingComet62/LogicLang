@@ -141,3 +141,22 @@ circuit main {
   AND(weirdOut.0, weirdOut.1)
 }
 ```
+
+# HOW TO BUILD/USE:
+## On Windows
+You will need [GNU Make](https://www.gnu.org/software/make/) installed as well as [GCC](https://www.mingw-w64.org/).<br>
+To build the project run the command `make windows`
+## On Linux
+You will need `make` installed.<br>
+To build run `make linux`<br>
+
+### On debian based linux
+Install `make` with `sudo apt install make`
+### On Arch 
+Install `make` with `sudo yarn install make`
+
+
+
+
+
+
