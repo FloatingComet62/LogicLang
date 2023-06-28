@@ -39,6 +39,6 @@ typedef struct
 token_t lex(lexer_t* lexer);
 
 #define token_type_to_string(type) \
-	(((char*[]){"ID", "BINARY", "SYMBOL", "PIN", "MACRO_NAME"})[type])
+	(((char*[]){"ID", "BINARY", "SYMBOL", "PIN", "MACRO_NAME", "END_OF_FILE"})[type])
 
 #endif

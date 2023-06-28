@@ -90,8 +90,6 @@ token_t lex(lexer_t* lexer)
 		}
 		return (token_t){end_result, PIN, lexer->line, lexer->col};
 	}
-	printf("Unexpeected character '%c' in input.\n", current);
+	printf("Unexpected character '%c' in input.\n", current);
 	return (token_t){0};
 }
-
-#undef current

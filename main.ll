@@ -1,4 +1,4 @@
 circuit main
 {
-	not(1);
+	not();
 }

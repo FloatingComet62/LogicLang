@@ -4,7 +4,7 @@ typedef unsigned char bool;
 #define true 1
 #define false 0
 
-#define panic(str) printf("PANIC: %s\n", str)
+#undef current
 
 char* help_message = "~~ USAGE ~~\n\n exec [INPUT FILE]\n";
 char** argv;
@@ -41,7 +41,7 @@ char* read_file(char* fp)
 
 	if (!f)
 	{
-		// not a real faliure more of a mistake.
+		// not a real failure more of a mistake.
 		printf("File '%s' does not exist.", fp);
 		exit(0);
 	}
@@ -53,10 +53,10 @@ char* read_file(char* fp)
 	char* string = malloc(fsize + 1);
 	memset(string, 0, fsize + 1);
 
-	bool success = fread(string, fsize, 1, f);
-	if (!success)
+	bool failure = fread(string, fsize, 1, f);
+	if (failure)
 	{
-		panic("Could not read file.");
+		printf("Could not read file.");
 	}
 
 	fclose(f);
